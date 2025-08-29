@@ -25,23 +25,8 @@ cd $DEVICE_PATH/recovery/root
 mkdir -p sbin system/bin system/lib system/lib64 system/etc system/recovery-resource-res/images
 mkdir -p vendor/lib vendor/lib64 vendor/bin vendor/etc
 
-if [ ! -f "sbin/recovery" ]; then
-    echo "#!/system/bin/sh" > sbin/recovery
-    echo "export PATH=/sbin:/system/bin:/system/xbin:/vendor/bin" >> sbin/recovery
-    echo "export LD_LIBRARY_PATH=/sbin:/system/lib:/system/lib64:/vendor/lib:/vendor/lib64" >> sbin/recovery
-    echo "/sbin/twrp" >> sbin/recovery
-    chmod 755 sbin/recovery
-fi
-
-if [ ! -f "sbin/twrp" ]; then
-    echo "#!/system/bin/sh" > sbin/twrp
-    echo "echo 'TWRP Recovery Starting...'" >> sbin/twrp
-    echo "echo 'Samsung Galaxy Tab A7 Lite (gta4lve)'" >> sbin/twrp
-    echo "while true; do" >> sbin/twrp
-    echo "  sleep 1" >> sbin/twrp
-    echo "done" >> sbin/twrp
-    chmod 755 sbin/twrp
-fi
+chmod 755 sbin/recovery sbin/twrp 2>/dev/null || true
+chmod 755 system/bin/recovery system/bin/twrp 2>/dev/null || true
 
 find . | cpio -o -H newc | gzip > $OUT_DIR/ramdisk-recovery.cpio.gz
 
