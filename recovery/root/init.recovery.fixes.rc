@@ -1,0 +1,15 @@
+on early-init
+    write /proc/sys/kernel/printk "1 1 1 1"
+    
+on init
+    mkdir /proc/cpwcn 0755 root root
+    mkdir /proc/mdbg 0755 root root
+    
+    write /proc/cpwcn/wdtirq ""
+    write /proc/mdbg/wdtirq ""
+    
+    chmod 766 /proc/cpwcn/wdtirq
+    chmod 760 /proc/mdbg/wdtirq
+    
+    chown system root /proc/cpwcn/wdtirq
+    chown system root /proc/mdbg/wdtirq

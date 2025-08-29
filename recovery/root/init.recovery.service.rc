@@ -1,0 +1,34 @@
+# Main recovery service configuration
+
+service recovery /sbin/recovery
+    class recovery
+    oneshot
+    priority -20
+    ioprio rt 4
+    seclabel u:r:recovery:s0
+
+service adbd /sbin/adbd --root_seclabel=u:r:su:s0 --device_banner=recovery
+    class recovery
+    socket adbd stream 660 system system
+    disabled
+    seclabel u:r:adbd:s0
+
+on property:sys.usb.config=adb
+    start adbd
+
+on property:sys.usb.config=none
+    stop adbd
+
+on property:sys.powerctl=*
+    setprop sys.powerctl.backup ${sys.powerctl}
+
+on property:ro.debuggable=1
+    start console
+
+service console /system/bin/sh
+    class recovery
+    console
+    user root
+    group root
+    seclabel u:r:shell:s0
+    disabled

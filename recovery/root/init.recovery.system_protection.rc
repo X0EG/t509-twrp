@@ -1,0 +1,15 @@
+on early-init
+    setprop ro.recovery.protection.enabled 1
+
+on init
+    write /proc/sys/kernel/sysrq 0
+    mount -o remount,ro /system 2>/dev/null || true
+    mount -o remount,ro /vendor 2>/dev/null || true
+    
+on post-fs-data
+    write /sys/fs/selinux/enforce 0
+    mkdir /tmp/recovery 0755 root root
+    
+on property:ro.bootmode=normal
+    write /sys/fs/selinux/enforce 1
+    setprop ro.recovery.protection.enabled 0

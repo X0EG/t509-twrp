@@ -1,0 +1,8 @@
+# Default properties for TWRP recovery
+# Disable secure ADB so that connection is allowed without authorization key prompt
+ro.secure=0
+ro.adb.secure=0
+ro.debuggable=1
+persist.service.adb.enable=1
+sys.usb.config=adb
+persist.sys.usb.config=adb

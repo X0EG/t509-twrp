@@ -1,0 +1,12 @@
+on init
+    # unlink /efs > /mnt/vendor/efs
+    rm /efs
+    mkdir /efs
+    mkdir /sec_efs
+    write /proc/sys/kernel/printk "1 1 1 1"
+    stop keystore2
+    stop vendor.keymaster-4-0
+    stop vendor.gatekeeper-1-0
+
+on property:ro.bootmode=recovery
+    setprop sys.usb.config adb

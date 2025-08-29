@@ -1,0 +1,28 @@
+on early-init
+    write /sys/class/graphics/fb0/bits_per_pixel 16
+    write /proc/sys/vm/lowmem_reserve_ratio "128 128"
+    write /proc/sys/vm/min_free_kbytes 8192
+    
+on init
+    setprop ro.recovery.graphics_backend fbdev
+    setprop debug.sf.disable_triple_buffer 1
+    setprop debug.egl.hw 0
+    setprop debug.sf.hw 0
+    
+    setprop ro.hardware.gralloc fbdev
+    setprop ro.hardware.hwcomposer fbdev
+    write /sys/module/drm/parameters/edid_fixup 0
+    write /sys/module/drm/parameters/debug 0
+    write /sys/class/graphics/fb0/state 1
+    
+    write /sys/class/graphics/fb0/mode "U:1200x2000p-60"
+    write /sys/class/graphics/fb0/state 1
+    
+on property:ro.bootmode=recovery
+    write /sys/class/graphics/fb0/rotate 0
+    write /sys/class/graphics/fb0/bits_per_pixel 32
+    write /sys/class/graphics/fb0/state 1
+    write /sys/class/vtconsole/vtcon1/bind 0
+    
+    # Force switch from bootloader framebuffer to recovery
+    write /sys/class/tty/tty0/active 1
