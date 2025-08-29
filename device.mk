@@ -85,5 +85,4 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/recovery/root/init.recovery.usb.rc:$(TARGET_COPY_OUT_RECOVERY)/root/init.recovery.usb.rc \
     $(LOCAL_PATH)/recovery/root/init.recovery.hlthchrg.rc:$(TARGET_COPY_OUT_RECOVERY)/root/init.recovery.hlthchrg.rc \
     $(LOCAL_PATH)/recovery/root/init.recovery.logd.rc:$(TARGET_COPY_OUT_RECOVERY)/root/init.recovery.logd.rc \
-    $(LOCAL_PATH)/recovery/root/init.recovery.service.rc:$(TARGET_COPY_OUT_RECOVERY)/root/init.recovery.service.rc \
-    $(LOCAL_PATH)/recovery/root/system/bin/android.hardware.health@2.0-service:$(TARGET_COPY_OUT_RECOVERY)/root/system/bin/android.hardware.health@2.0-service
+    $(LOCAL_PATH)/recovery/root/init.recovery.service.rc:$(TARGET_COPY_OUT_RECOVERY)/root/init.recovery.service.rc
