@@ -26,5 +26,6 @@ on property:ro.bootmode=recovery
     write /sys/class/graphics/fb0/state 1
     write /sys/class/vtconsole/vtcon1/bind 0
     
-    # Force switch from bootloader framebuffer to recovery
+    write /sys/class/backlight/panel0-backlight/brightness 1200
+    
     write /sys/class/tty/tty0/active 1

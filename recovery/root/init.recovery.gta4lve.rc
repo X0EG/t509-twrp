@@ -26,6 +26,11 @@ on init
     mkdir /dev/block/bootdevice 0755 root root
     mkdir /dev/block/bootdevice/by-name 0755 root root
     
+    wait /dev/block/platform/soc/${ro.boot.bootdevice}
+    symlink /dev/block/platform/soc/${ro.boot.bootdevice} /dev/block/bootdevice
+    
+    export ANDROID_ROOT /system_root
+    
     symlink /dev/block/mmcblk0p31 /dev/block/bootdevice/by-name/misc
     symlink /dev/block/mmcblk0p43 /dev/block/bootdevice/by-name/boot
     symlink /dev/block/mmcblk0p44 /dev/block/bootdevice/by-name/recovery
@@ -58,6 +63,10 @@ on property:ro.bootmode=recovery
     write /sys/class/tty/tty0/active 1
     
     start recovery
+
+on late-fs
+    exec_start wait_for_keymaster
+    mount_all /system/etc/recovery.fstab --late
     
 on property:ro.bootmode=normal
     setprop ro.recovery.active 0

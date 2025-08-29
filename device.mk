@@ -56,6 +56,24 @@ PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
     persist.sys.usb.config=adb \
     sys.usb.config=adb
 
+RECOVERY_SDCARD_ON_DATA := true
+TW_EXCLUDE_DEFAULT_USB_INIT := true
+TW_EXTRA_LANGUAGES := true
+TW_INCLUDE_NTFS_3G := true
+TW_USE_TOOLBOX := true
+TW_INCLUDE_RESETPROP := true
+TW_INPUT_BLACKLIST := "hbtp_vm"
+TW_BRIGHTNESS_PATH := "/sys/class/backlight/panel0-backlight/brightness"
+TW_DEFAULT_BRIGHTNESS := 1200
+TARGET_USES_MKE2FS := true
+TW_NO_LEGACY_PROPS := true
+TW_USE_NEW_MINADBD := true
+TW_NO_BIND_SYSTEM := true
+TW_NO_SCREEN_BLANK := true
+TW_EXCLUDE_APEX := true
+TW_FRAMERATE := 60
+TW_HAS_DOWNLOAD_MODE := true
+
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/recovery/root/vendor/manifest.xml:$(TARGET_COPY_OUT_RECOVERY)/root/vendor/manifest.xml \
     $(LOCAL_PATH)/recovery/root/init.recovery.gta4lve.rc:$(TARGET_COPY_OUT_RECOVERY)/root/init.recovery.gta4lve.rc \
