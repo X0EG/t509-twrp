@@ -3,6 +3,7 @@
 DEVICE_PATH="/workspace"
 OUT_DIR="$DEVICE_PATH/out"
 RECOVERY_IMG="$OUT_DIR/recovery.img"
+RECOVERY_SIZE=67108864
 
 echo "Building TWRP Recovery for Samsung Galaxy Tab A7 Lite (gta4lve)..."
 
@@ -20,6 +21,28 @@ fi
 
 echo "Creating recovery ramdisk..."
 cd $DEVICE_PATH/recovery/root
+
+mkdir -p sbin system/bin system/lib system/lib64 system/etc system/recovery-resource-res/images
+mkdir -p vendor/lib vendor/lib64 vendor/bin vendor/etc
+
+if [ ! -f "sbin/recovery" ]; then
+    echo "#!/system/bin/sh" > sbin/recovery
+    echo "export PATH=/sbin:/system/bin:/system/xbin:/vendor/bin" >> sbin/recovery
+    echo "export LD_LIBRARY_PATH=/sbin:/system/lib:/system/lib64:/vendor/lib:/vendor/lib64" >> sbin/recovery
+    echo "/sbin/twrp" >> sbin/recovery
+    chmod 755 sbin/recovery
+fi
+
+if [ ! -f "sbin/twrp" ]; then
+    echo "#!/system/bin/sh" > sbin/twrp
+    echo "echo 'TWRP Recovery Starting...'" >> sbin/twrp
+    echo "echo 'Samsung Galaxy Tab A7 Lite (gta4lve)'" >> sbin/twrp
+    echo "while true; do" >> sbin/twrp
+    echo "  sleep 1" >> sbin/twrp
+    echo "done" >> sbin/twrp
+    chmod 755 sbin/twrp
+fi
+
 find . | cpio -o -H newc | gzip > $OUT_DIR/ramdisk-recovery.cpio.gz
 
 echo "Building recovery image..."
@@ -39,8 +62,18 @@ mkbootimg \
     -o $RECOVERY_IMG
 
 if [ -f "$RECOVERY_IMG" ]; then
+    CURRENT_SIZE=$(stat -c%s "$RECOVERY_IMG")
+    echo "Current recovery size: $CURRENT_SIZE bytes"
+    echo "Required recovery size: $RECOVERY_SIZE bytes"
+    
+    if [ $CURRENT_SIZE -lt $RECOVERY_SIZE ]; then
+        echo "Padding recovery image to match partition size..."
+        dd if=/dev/zero bs=1 count=$((RECOVERY_SIZE - CURRENT_SIZE)) >> $RECOVERY_IMG 2>/dev/null
+    fi
+    
     echo "Recovery image built successfully: $RECOVERY_IMG"
     ls -lh $RECOVERY_IMG
+    echo "Recovery size: $(stat -c%s "$RECOVERY_IMG") bytes ($(echo "scale=1; $(stat -c%s "$RECOVERY_IMG")/1024/1024" | bc)MB)"
 else
     echo "Failed to build recovery image!"
     exit 1

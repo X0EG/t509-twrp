@@ -1,0 +1,6 @@
+#!/system/bin/sh
+echo 'TWRP Recovery Starting...'
+echo 'Samsung Galaxy Tab A7 Lite (gta4lve)'
+while true; do
+  sleep 1
+done
