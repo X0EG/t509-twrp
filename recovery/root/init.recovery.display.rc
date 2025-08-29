@@ -1,0 +1,16 @@
+on early-init
+    write /sys/class/graphics/fb0/state 0
+    write /sys/class/graphics/fb0/blank 1
+
+on init
+    write /sys/class/graphics/fb0/state 1
+    write /sys/class/graphics/fb0/blank 0
+    write /sys/class/graphics/fb0/bits_per_pixel 32
+    write /sys/class/graphics/fb0/mode "U:1200x2000p-60"
+    
+on property:ro.bootmode=recovery
+    write /sys/class/graphics/fb0/state 1
+    write /sys/class/graphics/fb0/blank 0
+    write /sys/class/graphics/fb0/bits_per_pixel 32
+    write /sys/class/vtconsole/vtcon1/bind 0
+    write /sys/class/tty/tty0/active 1
