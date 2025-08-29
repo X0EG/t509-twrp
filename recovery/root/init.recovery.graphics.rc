@@ -1,7 +1,9 @@
 on early-init
-    write /sys/class/graphics/fb0/bits_per_pixel 16
+    write /sys/class/graphics/fb0/bits_per_pixel 32
     write /proc/sys/vm/lowmem_reserve_ratio "128 128"
     write /proc/sys/vm/min_free_kbytes 8192
+    write /sys/class/graphics/fb0/blank 1
+    write /sys/class/graphics/fb0/blank 0
     
 on init
     setprop ro.recovery.graphics_backend fbdev
@@ -13,10 +15,10 @@ on init
     setprop ro.hardware.hwcomposer fbdev
     write /sys/module/drm/parameters/edid_fixup 0
     write /sys/module/drm/parameters/debug 0
-    write /sys/class/graphics/fb0/state 1
     
     write /sys/class/graphics/fb0/mode "U:1200x2000p-60"
     write /sys/class/graphics/fb0/state 1
+    write /sys/class/graphics/fb0/bits_per_pixel 32
     
 on property:ro.bootmode=recovery
     write /sys/class/graphics/fb0/rotate 0

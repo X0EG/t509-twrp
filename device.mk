@@ -60,6 +60,7 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/recovery/root/vendor/manifest.xml:$(TARGET_COPY_OUT_RECOVERY)/root/vendor/manifest.xml \
     $(LOCAL_PATH)/recovery/root/init.recovery.gta4lve.rc:$(TARGET_COPY_OUT_RECOVERY)/root/init.recovery.gta4lve.rc \
     $(LOCAL_PATH)/recovery/root/init.recovery.graphics.rc:$(TARGET_COPY_OUT_RECOVERY)/root/init.recovery.graphics.rc \
+    $(LOCAL_PATH)/recovery/root/init.recovery.display.rc:$(TARGET_COPY_OUT_RECOVERY)/root/init.recovery.display.rc \
     $(LOCAL_PATH)/recovery/root/sbin/permissive.sh:$(TARGET_COPY_OUT_RECOVERY)/root/sbin/permissive.sh \
     $(LOCAL_PATH)/recovery/root/init.recovery.system_protection.rc:$(TARGET_COPY_OUT_RECOVERY)/root/init.recovery.system_protection.rc \
     $(LOCAL_PATH)/recovery/root/init.recovery.fixes.rc:$(TARGET_COPY_OUT_RECOVERY)/root/init.recovery.fixes.rc \

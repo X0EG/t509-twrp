@@ -1,4 +1,5 @@
 import /init.recovery.graphics.rc
+import /init.recovery.display.rc
 import /init.recovery.system_protection.rc
 import /init.recovery.fixes.rc
 import /init.recovery.hlthchrg.rc
@@ -48,9 +49,13 @@ on property:ro.bootmode=recovery
     wait /dev/block/mmcblk0p47 5
     
     write /sys/class/graphics/fb0/blank 1
+    sleep 1
     write /sys/class/graphics/fb0/blank 0
+    write /sys/class/graphics/fb0/state 1
+    write /sys/class/graphics/fb0/bits_per_pixel 32
     
     write /sys/class/vtconsole/vtcon1/bind 0
+    write /sys/class/tty/tty0/active 1
     
     start recovery
     
