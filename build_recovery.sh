@@ -19,6 +19,11 @@ if [ ! -f "$DEVICE_PATH/prebuilt/dtb.img" ]; then
     exit 1
 fi
 
+if [ ! -f "$DEVICE_PATH/prebuilt/dtbo.img" ]; then
+    echo "Error: DTBO image not found!"
+    exit 1
+fi
+
 echo "Creating recovery ramdisk..."
 cd $DEVICE_PATH/recovery/root
 
@@ -34,8 +39,9 @@ echo "Building recovery image..."
 cd $DEVICE_PATH
 
 mkbootimg \
-    --kernel prebuilt/kernel_working \
+    --kernel prebuilt/kernel \
     --ramdisk $OUT_DIR/ramdisk-recovery.cpio.gz \
+    --dtb prebuilt/dtb.img \
     --base 0x00000000 \
     --kernel_offset 0x00008000 \
     --ramdisk_offset 0x01000000 \
