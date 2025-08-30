@@ -34,15 +34,14 @@ echo "Building recovery image..."
 cd $DEVICE_PATH
 
 mkbootimg \
-    --kernel prebuilt/kernel \
+    --kernel prebuilt/kernel_working \
     --ramdisk $OUT_DIR/ramdisk-recovery.cpio.gz \
-    --dtb prebuilt/dtb.img \
     --base 0x00000000 \
     --kernel_offset 0x00008000 \
     --ramdisk_offset 0x01000000 \
     --tags_offset 0x00000100 \
     --pagesize 2048 \
-    --cmdline "console=ttyS1,115200n8 androidboot.selinux=permissive buildvariant=eng" \
+    --cmdline "console=ttyS1,115200n8" \
     --header_version 2 \
     -o $RECOVERY_IMG
 
